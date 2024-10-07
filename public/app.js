@@ -6,14 +6,19 @@ vårt program behöver "komma ihåg" saker, vilka?
 
 render = visa upp vårt state
 
+DRY = dont repeat yourself
+
+ord vi använt: statiskt, dynamiskt, abstrahera, DRY
+
 */
 
 // vårt state
-const userOptions = ["basic", "pretty", "deluxe", "ultra"];
+const userOptions = [{ word: "Pretty", num: 12 }];
 
 // redigera state
-const addUserOption = (word) => {
-	userOptions.push(word);
+const addUserOption = (word, num) => {
+	userOptions.push({ word, num });
+	console.log(userOptions);
 };
 
 // en första render-funktion
@@ -30,9 +35,9 @@ const renderUserOptionsAsUl = () => {
 const renderCards = () => {
 	const selectElement = document.querySelector("main");
 	selectElement.innerHTML = "";
-	for (const el of userOptions) {
+	for (const obj of userOptions) {
 		const newElement = document.createElement("div");
-		newElement.innerHTML = el;
+		newElement.innerHTML = `Text: ${obj.word}, Number: ${obj.num}`;
 		selectElement.appendChild(newElement);
 	}
 };
@@ -47,7 +52,10 @@ const renderAll = () => {
 // lyssnare
 document.querySelector("button").addEventListener("click", (e) => {
 	e.preventDefault();
-	addUserOption(document.querySelector("#add").value);
+	addUserOption(
+		document.querySelector("#add").value,
+		document.querySelector("#num").value
+	);
 	renderAll();
 	console.log(userOptions);
 });
